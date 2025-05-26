@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 //@DiscriminatorColumn(name = "TYPE", length = 4, discriminatorType = DiscriminatorType.STRING )//discriminatorType c'est par default STRING
 @Data @NoArgsConstructor @AllArgsConstructor
 public abstract class BankAccount {
