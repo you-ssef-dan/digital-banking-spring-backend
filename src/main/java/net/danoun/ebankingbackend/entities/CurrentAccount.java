@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("CA")
+//@DiscriminatorValue("CA")
 @Data @AllArgsConstructor
 @NoArgsConstructor
 public class CurrentAccount extends BankAccount{
