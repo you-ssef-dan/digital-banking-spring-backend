@@ -1,9 +1,6 @@
 package net.danoun.ebankingbackend;
 
-import net.danoun.ebankingbackend.entities.AccountOperation;
-import net.danoun.ebankingbackend.entities.CurrentAccount;
-import net.danoun.ebankingbackend.entities.Customer;
-import net.danoun.ebankingbackend.entities.SavingAccount;
+import net.danoun.ebankingbackend.entities.*;
 import net.danoun.ebankingbackend.enums.AccountStatus;
 import net.danoun.ebankingbackend.enums.OperationType;
 import net.danoun.ebankingbackend.repositories.AccountOperationRepository;
@@ -25,7 +22,40 @@ public class EBankingBackEndApplication {
         SpringApplication.run(EBankingBackEndApplication.class, args);
     }
 
+
     @Bean
+    CommandLineRunner commandLineRunner(CustomerRepository customerRepository,
+                            BankAccountRepository bankAccountRepository,
+                            AccountOperationRepository accountOperationRepository){
+
+        return args -> {
+
+            BankAccount bankAccount =
+                    bankAccountRepository.findById("1b4bea48-a10c-4a57-8675-a13a2b7f87d8").orElse(null);
+            if (bankAccount != null) {
+                System.out.println("*********************");
+                System.out.println("Bank Account ID: " + bankAccount.getId());
+                System.out.println("balance: " + bankAccount.getBalance());
+                System.out.println("customer: " + bankAccount.getCustomer().getName());
+                System.out.println("Status: "+ bankAccount.getStatus());
+                System.out.println("Create date: "+ bankAccount.getCreatedAt());
+                System.out.println(bankAccount.getClass().getSimpleName());
+                if (bankAccount instanceof CurrentAccount) {
+                    System.out.println("Over Draft => " + ((CurrentAccount) bankAccount).getOverDraft());
+                }else if (bankAccount instanceof SavingAccount){
+                    System.out.println("Rate => " +  ((SavingAccount) bankAccount).getInterestRate());
+                }
+                bankAccount.getAccountOperations().forEach(op -> {
+                    System.out.println(op.getType() + "\t" + op.getOperationDate() +"\t" +  op.getAmount());
+                });
+
+            }
+
+        };
+    }
+
+
+    //@Bean
     CommandLineRunner start(CustomerRepository customerRepository,
                             BankAccountRepository bankAccountRepository,
                             AccountOperationRepository accountOperationRepository) {
