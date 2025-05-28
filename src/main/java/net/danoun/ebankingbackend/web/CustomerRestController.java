@@ -2,6 +2,7 @@ package net.danoun.ebankingbackend.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.danoun.ebankingbackend.dtos.CustomerDTO;
 import net.danoun.ebankingbackend.entities.Customer;
 import net.danoun.ebankingbackend.services.BankAccountService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class CustomerRestController {
     private BankAccountService bankAccountService;
 
     @GetMapping("/customers")
-    public List<Customer> Customers() {
+    public List<CustomerDTO> Customers() {
         return bankAccountService.listCustomers();
     }
 
